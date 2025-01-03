@@ -8,13 +8,13 @@ You can find detailed installation instructions, a full API reference, and tutor
 
 
 ## Features
-- **Super Simple**  
+- **✨ Super Simple**  
   Easily send messages to a Discord webhook with lots of customization options!
   
-- **Lots of Documentation**  
+- **📖 Lots of Documentation**  
   Pretty much everything is documented and there are tutorials for everything which include images.
 
-- **Lightning Fast**  
+- **⚡ Lightning Fast**  
   Optimized for speed and efficiency, ensuring seamless communication between your game and Discord.
 
 ## Getting Started
