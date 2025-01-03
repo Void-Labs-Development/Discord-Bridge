@@ -6,5 +6,7 @@ local URL = "https://discord.com/api/webhooks/1324818601055617104/urlv_XmpMBEEcE
 
 local Hook = DiscordBridge.Hook.new(URL)
 
-local HelloWorldMessage = DiscordBridge.Message.new():WithName("My webhook"):WithMessage("Hello World")
-Hook:SendMessage(HelloWorldMessage)
+local Fields = DiscordBridge.EmbedFields.new():AddField("Left", "I will show up on the left side of the embed", true):AddField("Right", "I will show up on the right side of the embed", true):AddField("Bottom", "I will show up below 'Left' and 'Right'", false)
+local EmbedMessage = DiscordBridge.Message.new():WithName("My webhook"):WithEmbed("Hello World!", "Test Message", "This is my first embedded message", "Test message", Color3.fromRGB(0, 255, 0), Fields)
+
+Hook:SendMessage(EmbedMessage)
