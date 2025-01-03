@@ -5,7 +5,7 @@ local EmbedFields = require(script.Parent.EmbedFields)
 --[=[
 	@class Message
 	This class is a way to describe what a message looks like. It allows you to add a single normal message and
-	multiple embedded messages.
+	multiple embedded messages. Every function returns self so that functions can be chained together!
 ]=]
 local Message = {}
 Message.__index = Message
@@ -90,16 +90,18 @@ end
 	@param Content string
 	This function allows you to add some normal text to your message.
 ]=]
-function Message:SetMessageContent(Content :string)
+function Message:WithMessage(Content :string)
 	self.RawMessageContent = Content
+	return self
 end
 
 --[=[
 	@param Name string
 	Sets the displayed name of the webhook when the message is sent
 ]=]
-function Message:SetBotName(Name :string)
+function Message:WithName(Name :string)
 	self.WebhookName = Name
+	return self
 end
 
 --[=[
@@ -114,7 +116,7 @@ end
 	A message can only contain 10 embeds. This is outlined in the [discord docs](https://discord.com/developers/docs/resources/webhook#execute-webhook)
 	:::
 ]=]
-function Message:AddEmbed(Title :string, Author :string, Content :string, Footer :string, Color :Color3, Fields :EmbedFields.EmbedFields)
+function Message:WithEmbed(Title :string, Author :string, Content :string, Footer :string, Color :Color3, Fields :EmbedFields.EmbedFields)
 	if #self.Embeds >= 10 then
 		warn("There is a maximum of 10 embeds per message, embed dropped")
 		return
@@ -146,6 +148,8 @@ function Message:AddEmbed(Title :string, Author :string, Content :string, Footer
 			["icon_url"] = "";
 		}
 	})
+
+	return self
 end
 
 --[=[

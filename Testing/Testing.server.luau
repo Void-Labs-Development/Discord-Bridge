@@ -6,9 +6,7 @@ local URL = "https://discord.com/api/webhooks/1324818601055617104/urlv_XmpMBEEcE
 
 local Hook = DiscordBridge.Hook.new(URL)
 
-local HelloWorldMessage = DiscordBridge.Message.new()
-HelloWorldMessage:SetBotName("My webhook")
-HelloWorldMessage:SetMessageContent("Hello World!")
-
+local HelloWorldMessage = DiscordBridge.Message.new():WithName("Me webhook"):WithMessage("Hello World")
 local _, HelloWorldMessageJSON = HelloWorldMessage:GetJSON()
+
 Hook:SendMessage(HelloWorldMessageJSON)
