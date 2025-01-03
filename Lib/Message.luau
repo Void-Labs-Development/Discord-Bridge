@@ -1,4 +1,7 @@
 local HttpService = game:GetService("HttpService")
+
+local EmbedFields = require(script.Parent.EmbedFields)
+
 --[=[
 	@class Message
 	This class is a way to describe what a message looks like. It allows you to add a single normal message and
@@ -111,10 +114,20 @@ end
 	A message can only contain 10 embeds. This is outlined in the [discord docs](https://discord.com/developers/docs/resources/webhook#execute-webhook)
 	:::
 ]=]
-function Message:AddEmbed(Title :string, Author :string, Content :string, Footer :string, Color :Color3)
+function Message:AddEmbed(Title :string, Author :string, Content :string, Footer :string, Color :Color3, Fields :EmbedFields.EmbedFields)
 	if #self.Embeds >= 10 then
 		warn("There is a maximum of 10 embeds per message, embed dropped")
 		return
+	end
+
+	local FieldsTable = {}
+
+	for _, Field in pairs(Fields.Fields) do
+		table.insert(FieldsTable, {
+			["name"] = Field.Title;
+			["value"] = Field.Content;
+			["inline"] = Field.Inline;
+		})
 	end
 
 	table.insert(self.Embeds, {
@@ -127,7 +140,7 @@ function Message:AddEmbed(Title :string, Author :string, Content :string, Footer
 		["url"] = "";
 		["description"] = Content;
 		["color"] = CreateEmbedColorValue(Color);
-		["fields"] = {};
+		["fields"] = FieldsTable;
 		["footer"] = {
 			["text"] = Footer;
 			["icon_url"] = "";

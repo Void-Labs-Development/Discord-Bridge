@@ -1,11 +1,20 @@
 title = "Discord Bridge"
 gitSourceBranch = "master"
-classOrder = []
 tagline = "Discord webhooks made easy!"
 
 [docusaurus]
 onBrokenLinks = "throw"
 onBrokenMarkdownLinks = "warn"
+[docusarus.themeConfig.prism]
+additionalLangues = ["lua", "luau", "cpp"]
+
+[[classOrder]]
+section = "Hooks"
+classes = ["Hook"]
+
+[[classOrder]]
+section = "Message"
+classes = ["Message", "EmbedFields"]
 
 [footer]
 style = "dark"
