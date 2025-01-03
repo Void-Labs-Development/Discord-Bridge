@@ -1,0 +1,12 @@
+title = "Discord Bridge"
+gitSourceBranch = "master"
+classOrder = []
+tagline = "Discord webhooks made easy!"
+
+[docusaurus]
+onBrokenLinks = "throw"
+onBrokenMarkdownLinks = "warn"
+
+[footer]
+style = "dark"
+copyright = "Copyright © 2025 Void Labs Development. Built with Moonwave and Docusaurus"

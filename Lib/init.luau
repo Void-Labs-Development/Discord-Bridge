@@ -1,3 +1,4 @@
-return function()
-	print("Hello from init.luau")
-end
+return {
+	Hook = require(script.Hook),
+	Message = require(script.Message)
+}

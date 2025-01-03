@@ -1,0 +1,23 @@
+local HttpService = game:GetService("HttpService")
+--[=[
+	@class Hook
+	A hook handles sending messages to the webhook URL it is tied to. Note that you cannot
+	change the URL the hook is tied to.
+]=]
+local Hook = {}
+Hook.__index = Hook
+
+function Hook.new(WebhookURL :string)
+	assert(type(WebhookURL) == "string", "WebhookURL has to be a string")
+
+	local self = setmetatable({}, Hook)
+	self._Url = WebhookURL
+	return self
+end
+
+function Hook:SendMessage(Content :string)
+	print(Content)
+	HttpService:PostAsync(self._Url, Content, Enum.HttpContentType.ApplicationJson, false)
+end
+
+return Hook
