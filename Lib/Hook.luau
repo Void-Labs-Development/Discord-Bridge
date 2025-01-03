@@ -10,6 +10,11 @@ local MessageClass = require(script.Parent.Message)
 local Hook = {}
 Hook.__index = Hook
 
+--[=[
+	@param WebhookURL string
+
+	Create a new hook tied to the given webhook URL
+]=]
 function Hook.new(WebhookURL :string)
 	assert(type(WebhookURL) == "string", "WebhookURL has to be a string")
 
@@ -18,6 +23,9 @@ function Hook.new(WebhookURL :string)
 	return self
 end
 
+--[=[
+	@param Message Message
+]=]
 function Hook:SendMessage(Message :MessageClass.Message)
 	local Success, Content = Message:GetJSON()
 	if not Success then return end

@@ -112,6 +112,7 @@ end
 	@param Content string
 	@param Footer string
 	@param Color Color3
+	@param Fields EmbedFields
 
 	Adds an embed into the message
 	:::info
@@ -155,10 +156,11 @@ function Message:WithEmbed(Title :string, Author :string, Content :string, Foote
 end
 
 --[=[
+	@private
 	@return boolean -- Did it get encoded
 	@return string -- Encoded message)
 
-	Returns the message as a JSON string ready to be sent to the webhook
+	Returns the message as a JSON string ready to be sent to the webhook.
 ]=]
 function Message:GetJSON() :(boolean, string)
 	local ContentTable = CreateDataTable(self.WebhookName, self.RawMessageContent, self.Embeds)
