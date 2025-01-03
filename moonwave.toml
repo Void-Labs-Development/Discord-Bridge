@@ -16,6 +16,22 @@ classes = ["Hook"]
 section = "Message"
 classes = ["Message", "EmbedFields"]
 
+[home]
+enabled = true
+includeReadeMe = true
+
+[[home.features]]
+title = "Super simple"
+description = "Easily send messages to a discord webhook with lots of customisation options!"
+
+[[home.features]]
+title = "Lightning fast"
+description = "Optimized for speed and efficiency, ensuring seamless communication between your game and Discord."
+
+[[home.features]]
+title = "Lots of documentation"
+description = "Pretty much everything is documented and explained with images, head over 'docs' in the top left."
+
 [footer]
 style = "dark"
 copyright = "Copyright © 2025 Void Labs Development. Built with Moonwave and Docusaurus"

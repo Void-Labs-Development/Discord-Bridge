@@ -7,7 +7,7 @@ sidebar_position: 1
 ## What is Discord Bridge?
 
 Discord Bridge is a library designed to make interacting with discord webhooks as simple as possible. Below is a table of support webhook features:  
-*a full list of features can be found [here](https://discord.com/developers/docs/resources/webhook#execute-webhook)*
+*a full list of possible features can be found [here](https://discord.com/developers/docs/resources/webhook#execute-webhook-jsonform-params)*
 
 | Feature | Supported | Will get support |
 |---------|-----------|------------------|
