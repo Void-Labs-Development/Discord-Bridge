@@ -10,6 +10,8 @@ local EmbedFields = require(script.Parent.EmbedFields)
 local Message = {}
 Message.__index = Message
 
+export type Message = {};
+
 local function CreateDataTable(Username :string, Content :string, Embeds :{Embed})
 	return {
 		["content"] = Content,
