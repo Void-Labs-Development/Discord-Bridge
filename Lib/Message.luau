@@ -7,37 +7,69 @@ local HttpService = game:GetService("HttpService")
 local Message = {}
 Message.__index = Message
 
-local function CreateDataTable(Username :string, Content :string)
+local function CreateDataTable(Username :string, Content :string, Embeds :{Embed})
 	return {
 		["content"] = Content,
-		["embeds"] = {},
+		["embeds"] = Embeds,
 		["username"] = Username,
 		["attachments"] = {}
 	}
 end
 
+local function CreateEmbedColorValue(Color :Color3) :number
+	local AsRGB = {}
+	AsRGB.Red = (Color.R * 255)
+	AsRGB.Green = (Color.G * 255)
+	AsRGB.Blue = (Color.B * 255)
+
+	local DecimalColor = (AsRGB.Red * math.pow(255, 2)) + (AsRGB.Green * 256) + AsRGB.Blue
+	return DecimalColor
+end
+
+--[=[
+	@within Message
+	@interface Embed
+	.Title string
+	.Author string
+	.Content string
+	.Footer string
+	.Color Color3
+
+	Describes what an embed looks like in code
+]=]
+type Embed = {
+	Title :string;
+	Author :string;
+	Content :string;
+	Footer :string;
+	Color :Color3;
+}
+
 --[=[
 	@readonly
+	@private
 	@prop WebhookName string
 	@within Message
 
 	When this message is sent the webhook's name will appear as this.
-
-	:::warning
-	You are not meant to set this value maually. Please use [Message:SetBotName] to set this value
-	:::
 ]=]
 
 --[=[
 	@readonly
+	@private
 	@prop RawMessageContent string
 	@within Message
 
 	This is the normal raw text of the message, you can only have 1 per message.
+]=]
 
-	:::warning
-	You are not meant to set this value maually. Please use [Message:SetMessageContent] to set this value
-	:::
+--[=[
+	@readonly
+	@private
+	@prop Embeds {Embed}
+	@within Message
+
+	A table containing all of the message's embeds.
 ]=]
 
 --[=[
@@ -47,6 +79,7 @@ function Message.new()
 	local self = setmetatable({}, Message)
 	self.RawMessageContent = ""
 	self.WebhookName = "Bridge"
+	self.Embeds = {} :: {Embed}
 	return self
 end
 
@@ -67,13 +100,49 @@ function Message:SetBotName(Name :string)
 end
 
 --[=[
+	@param Title string
+	@param Author string
+	@param Content string
+	@param Footer string
+	@param Color Color3
+
+	Adds an embed into the message
+	:::info
+	A message can only contain 10 embeds. This is outlined in the [discord docs](https://discord.com/developers/docs/resources/webhook#execute-webhook)
+	:::
+]=]
+function Message:AddEmbed(Title :string, Author :string, Content :string, Footer :string, Color :Color3)
+	if #self.Embeds >= 10 then
+		warn("There is a maximum of 10 embeds per message, embed dropped")
+		return
+	end
+
+	table.insert(self.Embeds, {
+		["author"] = {
+			["name"] = Author;
+			["url"] = "";
+			["icon_url"] = "";
+		};
+		["title"] = Title;
+		["url"] = "";
+		["description"] = Content;
+		["color"] = CreateEmbedColorValue(Color);
+		["fields"] = {};
+		["footer"] = {
+			["text"] = Footer;
+			["icon_url"] = "";
+		}
+	})
+end
+
+--[=[
 	@return boolean -- Did it get encoded
 	@return string -- Encoded message)
 
 	Returns the message as a JSON string ready to be sent to the webhook
 ]=]
 function Message:GetJSON() :(boolean, string)
-	local ContentTable = CreateDataTable(self.WebhookName, self.RawMessageContent)
+	local ContentTable = CreateDataTable(self.WebhookName, self.RawMessageContent, self.Embeds)
 
 	local JSON = ""
 
@@ -82,7 +151,7 @@ function Message:GetJSON() :(boolean, string)
 	end)
 
 	if not Success then
-		warn(ErrorMessage)
+		warn("Failed to encode message: "..ErrorMessage)
 	end
 
 	return Success, JSON

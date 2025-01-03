@@ -13,7 +13,12 @@ local NamedMessage = DiscordBridge.Message.new()
 NamedMessage:SetBotName("WOW")
 NamedMessage:SetMessageContent("Named Message")
 
+local EmbeddedMessage = DiscordBridge.Message.new()
+EmbeddedMessage:AddEmbed("Hello World!", "ImAnoob", "Hello World!!", "Test message", Color3.fromRGB(255, 0, 255))
+
 local _, NoNameMessageJSON = NoNameMessage:GetJSON()
 local _, NamedMessageJSON = NamedMessage:GetJSON()
+local _, EmbeddedMessageJSON = EmbeddedMessage:GetJSON()
 Hook:SendMessage(NoNameMessageJSON)
 Hook:SendMessage(NamedMessageJSON)
+Hook:SendMessage(EmbeddedMessageJSON)
