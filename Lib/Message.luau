@@ -112,14 +112,14 @@ end
 	@param Content string
 	@param Footer string
 	@param Color Color3
-	@param Fields EmbedFields
+	@param Fields EmbedFields?
 
 	Adds an embed into the message
 	:::info
 	A message can only contain 10 embeds. This is outlined in the [discord docs](https://discord.com/developers/docs/resources/webhook#execute-webhook)
 	:::
 ]=]
-function Message:WithEmbed(Title :string, Author :string, Content :string, Footer :string, Color :Color3, Fields :EmbedFields.EmbedFields)
+function Message:WithEmbed(Title :string, Author :string, Content :string, Footer :string, Color :Color3, Fields :EmbedFields.EmbedFields?)
 	if #self.Embeds >= 10 then
 		warn("There is a maximum of 10 embeds per message, embed dropped")
 		return
@@ -127,12 +127,14 @@ function Message:WithEmbed(Title :string, Author :string, Content :string, Foote
 
 	local FieldsTable = {}
 
-	for _, Field in pairs(Fields.Fields) do
-		table.insert(FieldsTable, {
-			["name"] = Field.Title;
-			["value"] = Field.Content;
-			["inline"] = Field.Inline;
-		})
+	if Fields then
+		for _, Field in pairs(Fields.Fields) do
+			table.insert(FieldsTable, {
+				["name"] = Field.Title;
+				["value"] = Field.Content;
+				["inline"] = Field.Inline;
+			})
+		end
 	end
 
 	table.insert(self.Embeds, {
