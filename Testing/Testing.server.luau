@@ -2,24 +2,13 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local DiscordBridge = require(ReplicatedStorage.Packages.DiscordBridge)
 
 -- Note that this webhook URL is now invalid
-local URL = "https://discord.com/api/webhooks/1324738675518603325/BMpZja91JRJuBfOTRpNTeBkGrbwzMvXjMQXgZ8pk7Uw0RtBAbNNndZawhy4iDF6mButE"
+local URL = "https://discord.com/api/webhooks/1324818601055617104/urlv_XmpMBEEcE-t9woN4k2n_mUaJZwfDlLA5ZeBK87bkKZycuQ2xjAMJTLyTyCFiMP1"
 
 local Hook = DiscordBridge.Hook.new(URL)
 
-local NoNameMessage = DiscordBridge.Message.new()
-NoNameMessage:SetMessageContent("No Named Message")
+local HelloWorldMessage = DiscordBridge.Message.new()
+HelloWorldMessage:SetBotName("My webhook")
+HelloWorldMessage:SetMessageContent("Hello World!")
 
-local NamedMessage = DiscordBridge.Message.new()
-NamedMessage:SetBotName("WOW")
-NamedMessage:SetMessageContent("Named Message")
-
-local EmbeddedMessage = DiscordBridge.Message.new()
-local EmbedFields = DiscordBridge.EmbedFields.new():AddField("Hello", "Hello World", true):AddField("World", "Hello World 2", true)
-EmbeddedMessage:AddEmbed("Hello World!", "ImAnoob", "Hello World!!", "Test message", Color3.fromRGB(255, 0, 255), EmbedFields)
-
-local _, NoNameMessageJSON = NoNameMessage:GetJSON()
-local _, NamedMessageJSON = NamedMessage:GetJSON()
-local _, EmbeddedMessageJSON = EmbeddedMessage:GetJSON()
-Hook:SendMessage(NoNameMessageJSON)
-Hook:SendMessage(NamedMessageJSON)
-Hook:SendMessage(EmbeddedMessageJSON)
+local _, HelloWorldMessageJSON = HelloWorldMessage:GetJSON()
+Hook:SendMessage(HelloWorldMessageJSON)
