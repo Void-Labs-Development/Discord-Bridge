@@ -33,16 +33,9 @@ local URL = "Your URL goes here" -- Make sure the URL goes between the speach ma
 
 local Hook = DiscordBridge.Hook.new(URL)
 
-local HelloWorldMessage = DiscordBridge.Message.new()
-HelloWorldMessage:SetBotName("My webhook")
-HelloWorldMessage:SetMessageContent("Hello World!")
-
-local _, HelloWorldMessageJSON = HelloWorldMessage:GetJSON()
-Hook:SendMessage(HelloWorldMessageJSON)
+local HelloWorldMessage = DiscordBridge.Message.new():WithName("My webhook"):WithMessage("Hello World")
+Hook:SendMessage(HelloWorldMessage)
 ```
-:::danger
-This code will change soon when message function chaining is introduced!
-:::
 
 Pressing play your webhook should send a message like this:
 
