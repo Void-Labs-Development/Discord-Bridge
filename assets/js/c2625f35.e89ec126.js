@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocs=self.webpackChunkdocs||[]).push([[269],{1071:e=>{e.exports=JSON.parse('{"functions":[],"properties":[],"types":[],"name":"Hook","desc":"A hook handles sending messages to the webhook URL it is tied to. Note that you cannot\\nchange the URL the hook is tied to.","source":{"line":7,"path":"Lib/Hook.luau"}}')}}]);
