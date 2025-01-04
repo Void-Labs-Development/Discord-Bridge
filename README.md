@@ -4,7 +4,7 @@
 
 A powerful and lightweight wrapper for the Discord API, designed specifically for Roblox developers. Easily integrate Discord features into your Roblox game, from sending webhook messages to handling bot interactions.
 
-You can find detailed installation instructions, a full API reference, and tutorials on the [documentation website](#).
+You can find detailed installation instructions, a full API reference, and tutorials on the [documentation website](https://void-labs-development.github.io/Discord-Bridge/).
 
 
 ## Features
