@@ -30,7 +30,14 @@ This list is subject to change.
 
 ## Installing
 ### Wally
-TODO
+Add the following to your `wally.toml`:
+```toml
+discordbridge = "sebastian2852/discordbridge@1.0.0"
+```
+and then run:
+```bash
+wally install
+```
 
 ### Git submodule
 TODO

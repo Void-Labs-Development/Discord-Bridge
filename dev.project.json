@@ -1,0 +1,25 @@
+{
+  "name": "DiscordBridge",
+  "tree": {
+    "$className": "DataModel",
+
+    "ReplicatedStorage":{
+      "Packages":{
+        "$className":"Folder",
+        "DiscordBridge":{
+          "$path":"Lib"
+        }
+      }
+    },
+
+    "HttpService":{
+      "$properties": {
+        "HttpEnabled": true
+      }
+    },
+
+    "ServerScriptService":{
+      "$path":"Testing"
+    }
+  }
+}
