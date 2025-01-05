@@ -41,4 +41,4 @@ Pressing play your webhook should send a message like this:
 
 <img src="../WebhookMessage.png" />
 
-You can now head over to [Creating Messages](http://localhost:3000/Discord-Bridge/docs/Message#message-config) to see how to configure name, avatar and how to add embeds.
+You can now head over to [Creating Messages](https://void-labs-development.github.io/Discord-Bridge/docs/Message#message-config) to see how to configure name, avatar and how to add embeds.
