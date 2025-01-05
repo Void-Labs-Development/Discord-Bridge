@@ -11,26 +11,43 @@ local Hook = {}
 Hook.__index = Hook
 
 --[=[
-	@param WebhookURL string
+	@private
+	@readonly
+	@prop _Urls {string}
+	@within Hook
+
+	A table containing all the URLs the hook sends messages to
+]=]
+
+--[=[
+	@param WebhookURLs {string}
 
 	Create a new hook tied to the given webhook URL
 ]=]
-function Hook.new(WebhookURL :string)
-	assert(type(WebhookURL) == "string", "WebhookURL has to be a string")
-
+function Hook.new(WebhookURLs :{string})
 	local self = setmetatable({}, Hook)
-	self._Url = WebhookURL
+	self._Urls = WebhookURLs
 	return self
 end
 
 --[=[
+	@param URL string
+	Add a URL to the hook
+]=]
+function Hook:AddURL(URL :string)
+	table.insert(self._Url, URL)
+end
+
+--[=[
 	@param Message Message
+	@yields
 ]=]
 function Hook:SendMessage(Message :MessageClass.Message)
 	local Success, Content = Message:GetJSON()
 	if not Success then return end
-	print(Content)
-	HttpService:PostAsync(self._Url, Content, Enum.HttpContentType.ApplicationJson, false)
+	for _, URL :string in pairs(self._Urls) do
+		HttpService:PostAsync(URL, Content, Enum.HttpContentType.ApplicationJson, false)
+	end
 end
 
 return Hook
