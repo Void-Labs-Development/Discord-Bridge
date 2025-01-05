@@ -24,7 +24,7 @@ Here’s a quick example of how to send a message to a Discord webhook:
 local DiscordBridge = require(Path.To.DiscordBridge)
 local URL = "Your URL goes here" -- Make sure the URL goes between the speach marks
 
-local Hook = DiscordBridge.Hook.new(URL)
+local Hook = DiscordBridge.Hook.new({URL})
 
 local HelloWorldMessage = DiscordBridge.Message.new():WithName("My webhook"):WithMessage("Hello World")
 Hook:SendMessage(HelloWorldMessage)
