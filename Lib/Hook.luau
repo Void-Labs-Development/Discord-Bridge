@@ -4,8 +4,7 @@ local MessageClass = require(script.Parent.Message)
 
 --[=[
 	@class Hook
-	A hook handles sending messages to the webhook URL it is tied to. Note that you cannot
-	change the URL the hook is tied to.
+	A hook handles sending messages to the webhook URLs it is tied to.
 ]=]
 local Hook = {}
 Hook.__index = Hook
