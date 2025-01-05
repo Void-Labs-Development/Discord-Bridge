@@ -4,10 +4,14 @@ local EmbedFields = require(script.Parent.EmbedFields)
 
 --[=[
 	@class Message
-	This class is a way to describe what a message looks like. It allows you to add a single normal message and
-	multiple embedded messages. Every function returns self so that functions can be chained together!
 
-	`With` functions set data, you should only call them once, calling them multiple times will override previous data.
+	A message is exactly what it sounds like it is. A message. Notably there are a couple of thing you have to keep
+	in mind when creating your messages:
+	- Maximum of 10 embeds
+		- Eventually you will be allowed to add more and DiscordHook will automatically split it up into another message for you
+	- You must have either a message or at least one embed
+
+	All methods return themselves to allow for chaining functions.
 ]=]
 local Message = {}
 Message.__index = Message
@@ -44,7 +48,7 @@ end
 	.Color Color3
 	.Fields Fields
 
-	Describes what an embed looks like in code
+	Describes what an embed looks like in code.
 ]=]
 type Embed = {
 	Title :string;
@@ -93,7 +97,9 @@ type Embed = {
 ]=]
 
 --[=[
-	Create a new [Message] instance. This can later be passed into a [Hook] to send the message content to the hook's webhook
+	@return Message
+
+	Create a new Message. You can then pass this Message into a [Hook] to send it to a webhook.
 ]=]
 function Message.new()
 	local self = setmetatable({}, Message)
@@ -106,7 +112,10 @@ end
 
 --[=[
 	@param Content string
-	This function allows you to add some normal text to your message.
+	@return Message
+
+	Sets the text the message will have. Since you can only have 1 message when sending a message calling this twice will
+	cause the message to get overriden with the new one.
 ]=]
 function Message:WithMessage(Content :string)
 	self.RawMessageContent = Content
@@ -116,8 +125,10 @@ end
 --[=[
 	@param AvatarImage string
 	@since v1.1.0
+	@return Message
+
 	Sets the image URL of the avatar which the webhook will use when sending this message. The URL must be an actual URL
-	not a roblox URI (rbxassetid://).
+	not a roblox URI (`rbxassetid://`).
 ]=]
 function Message:WithAvatar(AvatarImage :string)
 	self.AvatarURL = AvatarImage
@@ -126,7 +137,9 @@ end
 
 --[=[
 	@param Name string
-	Sets the displayed name of the webhook when the message is sent
+	@return Message
+
+	Sets the Webhooks username when sending this message.
 ]=]
 function Message:WithName(Name :string)
 	self.WebhookName = Name
@@ -140,8 +153,9 @@ end
 	@param Footer string
 	@param Color Color3
 	@param Fields EmbedFields?
+	@return Message
 
-	Adds an embed into the message
+	Add an embed to the message.
 	:::info
 	A message can only contain 10 embeds. This is outlined in the [discord docs](https://discord.com/developers/docs/resources/webhook#execute-webhook)
 	:::
@@ -149,7 +163,7 @@ end
 function Message:AddEmbed(Title :string, Author :string, Content :string, Footer :string, Color :Color3, Fields :EmbedFields.EmbedFields?)
 	if #self.Embeds >= 10 then
 		warn("There is a maximum of 10 embeds per message, embed dropped")
-		return
+		return self
 	end
 
 	local FieldsTable = {}
@@ -191,6 +205,7 @@ end
 	@param Footer string
 	@param Color Color3
 	@param Fields EmbedFields?
+	@return Message
 
 	@deprecated v1.1.0 -- Use `AddEmbed` instead
 

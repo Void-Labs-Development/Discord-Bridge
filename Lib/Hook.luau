@@ -4,7 +4,10 @@ local MessageClass = require(script.Parent.Message)
 
 --[=[
 	@class Hook
-	A hook handles sending messages to the webhook URLs it is tied to.
+	A hook handles communication with Webhooks. It can have many URLs attached to it at a time,
+	when you send a message the hook sends the message to all of the URLs in serial meaning
+	that some URLs will get the message delayed. This will be fixed when eventually sending messages
+	will be multithreaded
 ]=]
 local Hook = {}
 Hook.__index = Hook
@@ -20,8 +23,10 @@ Hook.__index = Hook
 
 --[=[
 	@param WebhookURLs {string}
+	@return Hook
 
-	Create a new hook tied to the given webhook URL
+	Create a new hook with the given URLs. You HAVE to pass a table, you can pass a single url
+	by just surrounding it with `{}` and it will work.
 ]=]
 function Hook.new(WebhookURLs :{string})
 	local self = setmetatable({}, Hook)
@@ -31,7 +36,8 @@ end
 
 --[=[
 	@param URL string
-	Add a URL to the hook
+
+	Adds a single URL to the hook.
 ]=]
 function Hook:AddURL(URL :string)
 	table.insert(self._Url, URL)
@@ -40,6 +46,10 @@ end
 --[=[
 	@param Message Message
 	@yields
+
+	Send the given [Message] to all the URLs under this hook. This does not happen in a seperate
+	thread and all URLs are posted to in serial. Eventually this will be moved into a promise
+	and multithreaded.
 ]=]
 function Hook:SendMessage(Message :MessageClass.Message)
 	local Success, Content = Message:GetJSON()

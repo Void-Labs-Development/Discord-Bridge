@@ -1,6 +1,8 @@
 --[=[
 	@class EmbedFields
-	Allows you to easiy add fields to embeds in messages.
+
+	Handles adding fields to embeds. This was seperated into a different class to keep the API simple and
+	the code readable.
 ]=]
 local EmbedFields = {}
 EmbedFields.__index = EmbedFields
@@ -29,7 +31,7 @@ export type Fields = {EmbedField}
 	.Content string
 	.Inline boolean
 
-	Describes what a single field looks like
+	Describes what a single field looks like.
 ]=]
 export type EmbedField = {
 	Title :string;
@@ -38,7 +40,7 @@ export type EmbedField = {
 }
 
 --[=[
-	Create a new holder for fields.
+	@return EmbedFields
 ]=]
 function EmbedFields.new()
 	local self = setmetatable({}, EmbedFields)
@@ -50,6 +52,7 @@ end
 	@param Title string
 	@param Content string
 	@param Inline boolean
+	@return EmbedFields
 
 	Adds a new field and returns `self` to allow for chaining. For example:
 	```lua
