@@ -32,7 +32,7 @@ This list is subject to change.
 ### Wally
 Add the following to your `wally.toml`:
 ```toml
-discordbridge = "sebastian2852/discordbridge@1.0.0"
+discordbridge = "sebastian2852/discordbridge@1.1.0"
 ```
 and then run:
 ```bash
