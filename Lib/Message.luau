@@ -34,6 +34,7 @@ local function CreateEmbedColorValue(Color :Color3) :number
 	AsRGB.Green = (Color.G * 255)
 	AsRGB.Blue = (Color.B * 255)
 
+	-- Yes green is meant to be * 256
 	local DecimalColor = (AsRGB.Red * math.pow(255, 2)) + (AsRGB.Green * 256) + AsRGB.Blue
 	return DecimalColor
 end
