@@ -18,7 +18,7 @@ Clicking this will go to a different screen where you can press create webhook w
 
 <img src="../WebhookInfoPage.png" />
 
-All we care about here is clicking the "Copy Webhook URL" button. Since Discord Bridge can set the username and in the future the icon as well we don't need to change anything else here.
+All we care about here is clicking the "Copy Webhook URL" button. Since Discord Bridge can set the username and the avatar as well we don't need to change anything else here.
 
 :::warning
 Make sure you don't share this URL as they too will be able to send any messages they want through the webhook which we don't want.
@@ -40,3 +40,5 @@ Hook:SendMessage(HelloWorldMessage)
 Pressing play your webhook should send a message like this:
 
 <img src="../WebhookMessage.png" />
+
+You can now head over to [Creating Messages](http://localhost:3000/Discord-Bridge/docs/Message#message-config) to see how to configure name, avatar and how to add embeds.

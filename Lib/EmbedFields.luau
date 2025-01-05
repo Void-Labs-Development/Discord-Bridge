@@ -53,7 +53,9 @@ end
 
 	Adds a new field and returns `self` to allow for chaining. For example:
 	```lua
-	local Fields = EmbedFields.new():AddEmbed("First", "Hello World!", true):AddEmbed("Another", "Bye World", true)
+	local Fields = EmbedFields.new()
+		:AddField("First", "Hello World!", true)
+		:AddField("Another", "Bye World", true)
 	```
 ]=]
 function EmbedFields:AddField(Title :string, Content :string, Inline :boolean)
