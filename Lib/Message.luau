@@ -6,17 +6,20 @@ local EmbedFields = require(script.Parent.EmbedFields)
 	@class Message
 	This class is a way to describe what a message looks like. It allows you to add a single normal message and
 	multiple embedded messages. Every function returns self so that functions can be chained together!
+
+	`With` functions set data, you should only call them once, calling them multiple times will override previous data.
 ]=]
 local Message = {}
 Message.__index = Message
 
 export type Message = {};
 
-local function CreateDataTable(Username :string, Content :string, Embeds :{Embed})
+local function CreateDataTable(AvatarURL :string, Username :string, Content :string, Embeds :{Embed})
 	return {
 		["content"] = Content,
 		["embeds"] = Embeds,
 		["username"] = Username,
+		["avatar_url"] = AvatarURL,
 		["attachments"] = {}
 	}
 end
@@ -39,6 +42,7 @@ end
 	.Content string
 	.Footer string
 	.Color Color3
+	.Fields Fields
 
 	Describes what an embed looks like in code
 ]=]
@@ -48,6 +52,7 @@ type Embed = {
 	Content :string;
 	Footer :string;
 	Color :Color3;
+	Fields :EmbedFields.Fields;
 }
 
 --[=[
@@ -71,6 +76,16 @@ type Embed = {
 --[=[
 	@readonly
 	@private
+	@prop AvatarURL string
+	@within Message
+
+	The URL of the icon the webhook will use when sending this message
+]=]
+
+
+--[=[
+	@readonly
+	@private
 	@prop Embeds {Embed}
 	@within Message
 
@@ -85,6 +100,7 @@ function Message.new()
 	self.RawMessageContent = ""
 	self.WebhookName = "Bridge"
 	self.Embeds = {} :: {Embed}
+	self.AvatarURL = ""
 	return self
 end
 
@@ -94,6 +110,17 @@ end
 ]=]
 function Message:WithMessage(Content :string)
 	self.RawMessageContent = Content
+	return self
+end
+
+--[=[
+	@param AvatarImage string
+	@since v1.1.0
+	Sets the image URL of the avatar which the webhook will use when sending this message. The URL must be an actual URL
+	not a roblox URI (rbxassetid://).
+]=]
+function Message:WithAvatar(AvatarImage :string)
+	self.AvatarURL = AvatarImage
 	return self
 end
 
@@ -119,7 +146,7 @@ end
 	A message can only contain 10 embeds. This is outlined in the [discord docs](https://discord.com/developers/docs/resources/webhook#execute-webhook)
 	:::
 ]=]
-function Message:WithEmbed(Title :string, Author :string, Content :string, Footer :string, Color :Color3, Fields :EmbedFields.EmbedFields?)
+function Message:AddEmbed(Title :string, Author :string, Content :string, Footer :string, Color :Color3, Fields :EmbedFields.EmbedFields?)
 	if #self.Embeds >= 10 then
 		warn("There is a maximum of 10 embeds per message, embed dropped")
 		return
@@ -158,6 +185,23 @@ function Message:WithEmbed(Title :string, Author :string, Content :string, Foote
 end
 
 --[=[
+	@param Title string
+	@param Author string
+	@param Content string
+	@param Footer string
+	@param Color Color3
+	@param Fields EmbedFields?
+
+	@deprecated v1.1.0 -- Use `AddEmbed` instead
+
+	This fuction still works but causes a warning.
+]=]
+function Message:WithEmbed(Title :string, Author :string, Content :string, Footer :string, Color :Color3, Fields :EmbedFields.EmbedFields?)
+	warn("WithEmbed() has been deprecated. Please use :AddEmbed() instead!")
+	return self:AddEmbed(Title, Author, Content, Footer, Color, Fields)
+end
+
+--[=[
 	@private
 	@return boolean -- Did it get encoded
 	@return string -- Encoded message)
@@ -165,7 +209,7 @@ end
 	Returns the message as a JSON string ready to be sent to the webhook.
 ]=]
 function Message:GetJSON() :(boolean, string)
-	local ContentTable = CreateDataTable(self.WebhookName, self.RawMessageContent, self.Embeds)
+	local ContentTable = CreateDataTable(self.AvatarURL, self.WebhookName, self.RawMessageContent, self.Embeds)
 
 	local JSON = ""
 
